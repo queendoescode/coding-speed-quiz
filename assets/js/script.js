@@ -8,6 +8,29 @@ var answersDiv = document.querySelector("#answers");
 
 // The quiz involves showing a series of questions.
 
+// 1) start the timer
+
+var countdownText = document.querySelector("#countdown");
+
+
+var countdownTimer = 75;
+countdownText.textContent = countdownTimer;
+
+setInterval(
+  () => {
+    countdownTimer--;
+    countdownText.textContent = countdownTimer;
+  }
+  , 1000
+);
+
+
+// 2) show next question and answers
+
+// 3) add "click" event listener to each answer
+//    - listener for correct answer
+//    - different listener for incorrect answers
+
 
 
 questionHeading.textContent = "This is the question!";

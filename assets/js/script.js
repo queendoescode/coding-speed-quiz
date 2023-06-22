@@ -12,17 +12,37 @@ var answersDiv = document.querySelector("#answers");
 
 var countdownText = document.querySelector("#countdown");
 
-
-var countdownTimer = 75;
+var myTimer;
+var countdownTimer = 5;
 countdownText.textContent = countdownTimer;
 
-setInterval(
-  () => {
-    countdownTimer--;
-    countdownText.textContent = countdownTimer;
+function everySecond() {
+  countdownTimer--;
+  countdownText.textContent = countdownTimer;
+  
+  // Check if time has run out
+
+  if (countdownTimer == 0) {
+    // When the user runs out of time, go to the Done page
+    allDone();
+    clearInterval(myTimer);
+  } else {
+    // do nothing 
   }
-  , 1000
-);
+
+}
+
+myTimer = setInterval(everySecond, 1000);
+
+// This function will render the points awarded
+// and show the form for entering initials for high score.
+
+function allDone() {
+  questionHeading.textContent = "You're out of time!";
+
+  answersDiv.innerHTML = `<p>Your score: ${countdownTimer}</p>`;
+}
+
 
 
 // 2) show next question and answers

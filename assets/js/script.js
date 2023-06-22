@@ -17,7 +17,7 @@ function showResultAndContinue(text) {
 
   setTimeout(() => {
     var noMoreQuestions = ! showNextQuestion();
-    if (noMoreQuestions) {
+    if (noMoreQuestions || countdownTimer <= 0) {
       endQuiz();
     }
   }, 2000);
@@ -38,6 +38,7 @@ function makeAnswer(text, isCorrect) {
     });
   } else {
     newAnswer.addEventListener("click", () => {
+      countdownTimer = countdownTimer - 15;
       showResultAndContinue("Wrong!");
     });
   }
@@ -82,16 +83,16 @@ function showNextQuestion() {
 
 
 var myTimer;
-var countdownTimer = 25;
+var countdownTimer = 5;
 countdownText.textContent = countdownTimer;
 
 function everySecond() {
   countdownTimer--;
-  countdownText.textContent = countdownTimer;
+  countdownText.textContent = Math.max(countdownTimer, 0);
   
   // Check if time has run out
 
-  if (countdownTimer == 0) {
+  if (countdownTimer <= 0) {
     // When the user runs out of time, go to the Done page
     endQuiz();
   } 
@@ -99,19 +100,42 @@ function everySecond() {
 
 myTimer = setInterval(everySecond, 1000);
 
+// Show form for entering initials for high score table
+
+function initialsForm() {
+  var form = document.createElement("form");
+  var label = document.createElement("label");
+  label.textContent = "Your Initials:";
+  var input = document.createElement("input");
+  var submit = document.createElement("button");
+  submit.className = "submit-button";
+  submit.textContent = "Submit";
+
+  form.appendChild(label);
+  form.appendChild(input);
+  form.appendChild(submit);
+  answersDiv.appendChild(form);
+}
+
+
 // This function will render the points awarded
 // and show the form for entering initials for high score.
 
 function endQuiz() {
+  var score;
   clearInterval(myTimer);
 
-  if (countdownTimer == 0) {
+  if (countdownTimer <= 0) {
     questionHeading.textContent = "You're out of time!";
+    score = 0;
   } else {
     questionHeading.textContent = "Congratulations! You answered all questions";
+    score = countdownTimer;
   }
 
-  answersDiv.innerHTML = `<p>Your score: ${countdownTimer}</p>`;
+  answersDiv.innerHTML = `<p>Your score: ${score}</p>`;
+
+  initialsForm();
 }
 
 showNextQuestion();

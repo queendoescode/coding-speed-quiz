@@ -79,6 +79,21 @@ function question2() {
   makeAnswer("4. 'peanut '.join('butter')", false);
 }
 
+function question3() {
+  questionHeading.textContent = "To count how many items are in an array named `animals`, which is correct:";
+  makeAnswer("1. length(animals)", false);
+  makeAnswer("2. count(animals)", false);
+  makeAnswer("3. animals.length", true);
+}
+
+function question4() {
+  questionHeading.textContent = "To check if a variable `a` is equal in type and value to variable `b`, which is correct:";
+  makeAnswer("1. a !== b", false);
+  makeAnswer("2. a === b", true);
+  makeAnswer("3. a.equals(b)", false);
+  makeAnswer("4. a == b", false);
+}
+
 function showNextQuestion() {
   questionNumber++;
 
@@ -92,6 +107,12 @@ function showNextQuestion() {
     return true;
   } else if (questionNumber === 2) {
     question2();
+    return true;
+  } else if (questionNumber === 3) {
+    question3();
+    return true;
+  } else if (questionNumber === 4) {
+    question4();
     return true;
   } else {
     return false;

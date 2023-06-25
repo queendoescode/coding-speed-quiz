@@ -9,6 +9,9 @@ var resultDiv = document.querySelector("#result");
 
 var countdownText = document.querySelector("#countdown");
 
+var scoresElement = document.querySelector("#scores");
+
+var clearButton = document.querySelector("#clear-button");
 
 // The quiz involves showing a series of questions.
 
@@ -208,7 +211,34 @@ function endQuiz() {
   initialsForm(score);
 }
 
+function listHighScores() {
+  highScoresJson = localStorage.getItem("highScoreBreakdown");
+  highScores = JSON.parse(highScoresJson);
 
+  scoresString = "";
+  for (var i = 0; i < highScores.length; i++) {
+    scoresString = scoresString + `${i + 1}.  ${highScores[i].coder}  ${highScores[i].score}\n`;
+  }
+
+  scoresElement.textContent = scoresString;
+}
+
+
+// if the question heading element exists, we are on the quiz page
 if (questionHeading) {
   showNextQuestion();
 }
+
+// if the scores element exists, we are on the high scores page
+if (scoresElement) {
+  listHighScores();
+
+  clearButton.addEventListener("click", () => {
+    localStorage.setItem("highScoreBreakdown", JSON.stringify([]));
+    listHighScores();
+  });
+}
+
+
+
+

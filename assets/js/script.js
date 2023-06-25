@@ -124,7 +124,6 @@ function showNextQuestion() {
 
 var myTimer;
 var countdownTimer = 75;
-countdownText.textContent = countdownTimer;
 
 function everySecond() {
   countdownTimer--;
@@ -138,12 +137,17 @@ function everySecond() {
   } 
 }
 
-myTimer = setInterval(everySecond, 1000);
+if (countdownText) {
+  countdownText.textContent = countdownTimer;
+  myTimer = setInterval(everySecond, 1000);
+}
 
 // Show form for entering initials for high score table
 
 function initialsForm() {
   var form = document.createElement("form");
+  form.setAttribute("action", "highscore.html");
+
   var label = document.createElement("label");
   label.textContent = "Your Initials:";
   var input = document.createElement("input");
@@ -178,4 +182,7 @@ function endQuiz() {
   initialsForm();
 }
 
-showNextQuestion();
+
+if (questionHeading) {
+  showNextQuestion();
+}

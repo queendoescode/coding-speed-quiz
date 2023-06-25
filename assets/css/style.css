@@ -17,7 +17,7 @@ p {
   border: 1px solid;
 }
 
-#quiz button {
+#quiz button, #high-scores button {
   display: block;
   margin: 10px;
   padding: 15px 30px;
@@ -40,7 +40,7 @@ p {
   box-shadow: 10px 10px 15px #999;
 }
 
-#quiz .submit-button {
+#quiz .submit-button, #high-scores button {
   padding: 3px;
   border-radius: 5px;
   display: inline;

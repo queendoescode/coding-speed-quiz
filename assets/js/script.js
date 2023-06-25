@@ -23,23 +23,40 @@ function showResultAndContinue(text) {
   }, 2000);
 }
 
+// This variable controls whether we will accept clicks
+// on the answer buttons. We want to ignore clicks
+// after the user has made their first click ... until the
+// next question is shown.
+var buttonsEnabled;
+
 function makeAnswer(text, isCorrect) {
-  var newAnswer = document.createElement("button");
-  answersDiv.appendChild(newAnswer); 
-  newAnswer.textContent = text;
+  var newAnswerButton = document.createElement("button");
+  newAnswerButton.setAttribute("class", "enabled"); // enables hover style
+  answersDiv.appendChild(newAnswerButton); 
+  newAnswerButton.textContent = text;
 
   // add "click" event listener to each answer
   //    - listener for correct answer
   //    - different listener for incorrect answers
 
+  //newAnswerButton.setAttribute("disabled", "disabled");
+
   if (isCorrect) {
-    newAnswer.addEventListener("click", () => {
-      showResultAndContinue("Correct!");
+    newAnswerButton.addEventListener("click", () => {
+      if (buttonsEnabled) {
+        showResultAndContinue("Correct!");
+        buttonsEnabled = false;
+        newAnswerButton.setAttribute("class", "disabled");
+      }
     });
   } else {
-    newAnswer.addEventListener("click", () => {
-      countdownTimer = countdownTimer - 15;
-      showResultAndContinue("Wrong!");
+    newAnswerButton.addEventListener("click", () => {
+      if (buttonsEnabled) {
+        countdownTimer = countdownTimer - 15;
+        showResultAndContinue("Wrong!");
+        buttonsEnabled = false;
+        newAnswerButton.setAttribute("class", "disabled");
+      }
     });
   }
 }
@@ -68,6 +85,8 @@ function showNextQuestion() {
   resultDiv.textContent = "";
   answersDiv.innerHTML = "";
 
+  buttonsEnabled = true;
+
   if (questionNumber === 1) {
     question1();
     return true;
@@ -83,7 +102,7 @@ function showNextQuestion() {
 
 
 var myTimer;
-var countdownTimer = 5;
+var countdownTimer = 75;
 countdownText.textContent = countdownTimer;
 
 function everySecond() {

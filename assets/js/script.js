@@ -144,16 +144,42 @@ if (countdownText) {
 
 // Show form for entering initials for high score table
 
-function initialsForm() {
+function initialsForm(quizScore) {
   var form = document.createElement("form");
   form.setAttribute("action", "highscore.html");
 
   var label = document.createElement("label");
   label.textContent = "Your Initials:";
+
   var input = document.createElement("input");
+
   var submit = document.createElement("button");
   submit.className = "submit-button";
   submit.textContent = "Submit";
+
+  submit.addEventListener("click", () => {
+    // Update local storage with the Coder's initials and score
+
+    var currentScore = {
+      coder: input.value,
+      score: quizScore
+    };
+
+    previousHighScoresJson = localStorage.getItem("highScoreBreakdown");
+
+    if (previousHighScoresJson === null) {
+      highScores = [];
+    } else {
+      // Local Storage only stores strings, so we have to convert it to an object value
+      // using JSON.parse() on the string
+      highScores = JSON.parse(previousHighScoresJson);
+    } 
+
+    // Add the current score to the array
+    highScores.push(currentScore);
+
+    localStorage.setItem("highScoreBreakdown", JSON.stringify(highScores));
+  });
 
   form.appendChild(label);
   form.appendChild(input);
@@ -179,7 +205,7 @@ function endQuiz() {
 
   answersDiv.innerHTML = `<p>Your score: ${score}</p>`;
 
-  initialsForm();
+  initialsForm(score);
 }
 
 

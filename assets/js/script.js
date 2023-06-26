@@ -122,8 +122,6 @@ function showNextQuestion() {
   }
 }
 
-// 1) start the timer
-
 
 var myTimer;
 var countdownTimer = 75;
@@ -139,6 +137,9 @@ function everySecond() {
     endQuiz();
   } 
 }
+
+
+// 1) start the timer
 
 if (countdownText) {
   countdownText.textContent = countdownTimer;
